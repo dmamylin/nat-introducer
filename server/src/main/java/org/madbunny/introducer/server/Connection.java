@@ -5,6 +5,7 @@ import org.madbunny.introducer.message.MessageVisitor;
 import org.madbunny.introducer.message.MessageWriter;
 import org.madbunny.introducer.message.json.JsonDeserializer;
 import org.madbunny.introducer.message.json.JsonSerializer;
+import org.madbunny.introducer.message.type.ServerAddress;
 import org.madbunny.server.TcpConnection;
 import org.madbunny.server.TcpConnectionContext;
 
@@ -34,5 +35,9 @@ public class Connection implements TcpConnection  {
     }
 
     private static final class MessageHandler extends MessageVisitor {
+        @Override
+        public void onServerAddress(ServerAddress message) {
+            System.out.println(message.toString());
+        }
     }
 }

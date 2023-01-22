@@ -14,7 +14,7 @@ public class TcpClient extends OutputStream implements Closeable {
     private final SocketChannel socket;
     private final OutputStream output;
 
-    public TcpClient(String remoteAddress, short remotePort) throws IOException {
+    public TcpClient(String remoteAddress, int remotePort) throws IOException {
         try (var client = SocketChannel.open()) {
             socket = client;
             var serverAddress = new InetSocketAddress(remoteAddress, remotePort);
