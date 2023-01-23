@@ -12,7 +12,7 @@ public class Application {
         try (var client = new TcpClient(args.remoteAddress, args.remotePort)) {
             var message = new ServerAddress("some-host", 123);
             writer.write(client, message);
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }

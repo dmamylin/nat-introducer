@@ -15,14 +15,14 @@ public class TcpClient extends OutputStream implements Closeable {
     private final OutputStream output;
 
     public TcpClient(String remoteAddress, int remotePort) throws IOException {
-        try (var client = SocketChannel.open()) {
-            socket = client;
-            var serverAddress = new InetSocketAddress(remoteAddress, remotePort);
-            socket.configureBlocking(true);
-            socket.bind(new InetSocketAddress(0));
-            socket.connect(serverAddress);
+        socket = SocketChannel.open();
+        try {
+            socket.connect(new InetSocketAddress(remoteAddress, remotePort));
+            output = new TcpSocketWriter(socket, WRITE_BUFFER_SIZE);
+        } catch (Exception e) {
+            socket.close();
+            throw e;
         }
-        output = new TcpSocketWriter(socket, WRITE_BUFFER_SIZE);
     }
 
     @Override
