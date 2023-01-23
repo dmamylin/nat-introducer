@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 class TcpConnectionWrapper {
-    private static final int BUFFER_SIZE = 8192;
+    private static final int BUFFER_SIZE = 64;
 
     private final ByteBuffer socketReadBuffer = ByteBuffer.allocate(BUFFER_SIZE);
     private final byte[] buffer = new byte[BUFFER_SIZE];
@@ -35,6 +35,7 @@ class TcpConnectionWrapper {
                 if (bytesRead <= 0) {
                     break;
                 }
+                socketReadBuffer.flip();
                 socketReadBuffer.get(buffer, 0, bytesRead);
                 connection.onDataReceive(new ByteArrayInputStream(buffer));
                 socketReadBuffer.clear();
